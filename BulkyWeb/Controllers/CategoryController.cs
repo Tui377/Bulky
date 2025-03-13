@@ -31,6 +31,7 @@ namespace BulkyWeb.Controllers
             {
                 _db.Categories.Add(categoryobj);
                 _db.SaveChanges();
+                TempData["success"] = "Catergory created successfully";
                 return RedirectToAction("Index");
             }
             return View();
