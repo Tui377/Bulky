@@ -1,9 +1,13 @@
 ﻿@model List<Category>
 @* TempData Notification *@
-@if (TempData["success"] != null)
+@*if (TempData["success"] != null)
 {
     <h2>@TempData["success"]</h2>
-}
+}*@
+
+
+@* Partial View Notification *@
+<partial name ="_Notification"/>
 
 <div class="container">
     <div class="row pt-4 pb-3">
