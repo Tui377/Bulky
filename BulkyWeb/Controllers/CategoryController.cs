@@ -1,21 +1,22 @@
 ﻿using BulkyWeb.Data;
 using BulkyWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using SD7501Bulky.DataAccess.Repository.IRepository;
 
 namespace BulkyWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ApplicationDbContext db) 
-        { 
-            _db = db;
+        public CategoryController(IUnitOfWork unitOfWork) 
+        {
+            _unitOfWork = unitOfWork;
         
         }
         public IActionResult Index()
         {
-            var objCatergoryList = _db.Categories.ToList();
+            var objCatergoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCatergoryList);
         }
 
@@ -27,13 +28,19 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category categoryobj)
         {
-            if (ModelState.IsValid) 
+            if (categoryobj.Name == categoryobj.DisplayOrder.ToString())
             {
-                _db.Categories.Add(categoryobj);
-                _db.SaveChanges();
-                TempData["success"] = "Catergory created successfully";
+                ModelState.AddModelError("Name", "The Display Order cannot exactly match with the name");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Category.Add(categoryobj);
+                _unitOfWork.Save();
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
+
             return View();
         }
 
@@ -44,12 +51,12 @@ namespace BulkyWeb.Controllers
             {
                 return NotFound();
             }
-            
-            //Find the id
-            Category? categoryFromDB = _db.Categories.Find(id);
 
+            //Find the id
+            Category? categoryFromDB = _unitOfWork.Category.Get(u => u.Id == id);
+          
             //There's Two more approaches to finding the id
-                //Category? categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
+                //Category? categoryFromDB = _db.Categories.Find(id);
                 //Category? categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
             if (categoryFromDB == null)
@@ -64,8 +71,9 @@ namespace BulkyWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(categoryobj);
-                _db.SaveChanges();
+                _unitOfWork.Category.Update(categoryobj);
+                _unitOfWork.Save();
+                TempData["success"] = "Category update successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -80,7 +88,7 @@ namespace BulkyWeb.Controllers
             }
 
             //Find the id
-            Category? categoryFromDB = _db.Categories.Find(id);
+            Category? categoryFromDB = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (categoryFromDB == null)
             {
@@ -92,14 +100,15 @@ namespace BulkyWeb.Controllers
         [HttpPost,ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? categoryobj = _db.Categories.Find(id);
+            Category? categoryobj = _unitOfWork.Category.Get(u => u.Id == id);
             if (categoryobj == null)
             {
                 return NotFound();
 
             }
-            _db.Categories.Remove(categoryobj);
-            _db.SaveChanges();
+            _unitOfWork.Category.Remove(categoryobj);
+            _unitOfWork.Save();
+            TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
     }

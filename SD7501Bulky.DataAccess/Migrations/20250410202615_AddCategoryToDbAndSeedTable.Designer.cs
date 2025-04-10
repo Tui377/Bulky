@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SD7501Bulky.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250404001708_AddCategoryToDbAndSeedTable")]
+    [Migration("20250410202615_AddCategoryToDbAndSeedTable")]
     partial class AddCategoryToDbAndSeedTable
     {
         /// <inheritdoc />
