@@ -42,8 +42,24 @@ namespace BulkyWeb.Areas.Admin.Controllers
         //}
 
 
-        //Create ***Wk7***
-        public IActionResult Create()
+        ////Create ***Wk7*** 
+        //public IActionResult Create()
+        //{
+        //    ProductVM productVM = new()
+        //    {
+        //        CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+        //        {
+        //            Text = u.Name,
+        //            Value = u.Id.ToString()
+        //        }),
+        //        Product = new Product()
+        //    };
+
+        //    return View(productVM);
+        //}
+
+        //Create ***Wk7*** Upsert method
+        public IActionResult Upsert(int? id)
         {
             ProductVM productVM = new()
             {
@@ -55,7 +71,17 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 Product = new Product()
             };
 
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                // Create
+                return View(productVM);
+            }
+            else
+            {
+                // Update
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
         }
 
         [HttpPost]
@@ -83,27 +109,27 @@ namespace BulkyWeb.Areas.Admin.Controllers
             //return View();
         }
 
-        //Edit
-        public IActionResult Edit(int? id)
-        {
-            if(id == null || id == 0) 
-            {
-                return NotFound();
-            }
+        ////Edit  ***WK 7**** REMOVED because of upsert method
+        //public IActionResult Edit(int? id)
+        //{
+        //    if(id == null || id == 0) 
+        //    {
+        //        return NotFound();
+        //    }
 
-            //Find the id
-            Product? productFromDB = _unitOfWork.Product.Get(u => u.Id == id);
+        //    //Find the id
+        //    Product? productFromDB = _unitOfWork.Product.Get(u => u.Id == id);
           
-            //There's Two more approaches to finding the id
-                //Product? productFromDB = _db.Categories.Find(id);
-                //Product? productFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+        //    //There's Two more approaches to finding the id
+        //        //Product? productFromDB = _db.Categories.Find(id);
+        //        //Product? productFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
-            if (productFromDB == null)
-            {
-                return NotFound();
-            }
-            return View(productFromDB);
-        }
+        //    if (productFromDB == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(productFromDB);
+        //}
 
         [HttpPost]
         public IActionResult Edit(Product productobj)
