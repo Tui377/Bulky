@@ -1,4 +1,5 @@
-﻿@model List<Category>
+﻿@using SD7501Bulky.Models
+@model List<Product>
 @* TempData Notification *@
 @*if (TempData["success"] != null)
 {
@@ -15,7 +16,7 @@
     <div class=" card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2"> Category List </h2>
+                <h2 class="text-white py-2"> Product List </h2>
             </div>
         </div>
     </div>
@@ -26,38 +27,39 @@
             </div>
 
     <div class="col-6">
-        <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Create New Category
+        <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create New Product
         </a>
     </div>
     </div>
 <table class="table table-bordered table-striped">
     <thread>
     <tr>
-        <th class="text-body-emphasis">
-            Category Name
-        </th>
-        <th class ="text-body-emphasis">
-            Display Order
-        </th>
-        <th></th>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Price</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th></th>
     </tr>
     </thread>
     <tbody>
-        @foreach (var obj in Model.OrderBy(u=>u.DisplayOrder))
+        @foreach (var obj in Model)
         {
             <tr>
-                <td class ="text-body"> @obj.Name </td>
-                <td class ="text-body"> @obj.DisplayOrder </td>
+                <td>@obj.Title</td>
+                <td>@obj.ISBN</td>
+                <td>@obj.ListPrice</td>
+                <td>@obj.Author</td>
                 <td>
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group me-2 w-25" role="group" aria-label="First group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id ="@obj.Id" class="btn btn-primary btn-sm text-light">
+                        <div class="btn-group me-2 w-26" role="group" aria-label="First group">
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id ="@obj.Id" class="btn btn-primary btn-sm text-light">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
                         </div>
-                        <div class="btn-group w-25" role="group" aria-label="Second group">
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger btn-sm text-light">
+                        <div class="btn-group w-26" role="group" aria-label="Second group">
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger btn-sm text-light">
                                 <i class="bi bi-trash"></i> Delete
                             </a>
                         </div>
