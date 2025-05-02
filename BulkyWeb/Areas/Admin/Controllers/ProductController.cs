@@ -84,14 +84,45 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
         }
 
-        [HttpPost]
-        //public IActionResult Create(Product productobj)
-        public IActionResult Create(ProductVM productVM)
+        //[HttpPost]
+        ////public IActionResult Create(Product productobj)
+        //public IActionResult Create(ProductVM productVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //_unitOfWork.Product.Add(productobj);
+        //        _unitOfWork.Product.Add(productVM.Product);
+        //        _unitOfWork.Save();
+        //        TempData["success"] = "Product created successfully";
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+        //        {
+        //            Text = u.Name,
+        //            Value = u.Id.ToString()
+        //        });
+
+        //        return View(productVM);
+        //    }
+        //    //return View();
+        //}
+
+        [HttpPost] //Upsert Wk7
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                //_unitOfWork.Product.Add(productobj);
-                _unitOfWork.Product.Add(productVM.Product);
+                if (productVM.Product.Id == 0) 
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
+                else 
+                {
+                    _unitOfWork.Product.Update(productVM.Product);
+
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
@@ -119,7 +150,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         //    //Find the id
         //    Product? productFromDB = _unitOfWork.Product.Get(u => u.Id == id);
-          
+
         //    //There's Two more approaches to finding the id
         //        //Product? productFromDB = _db.Categories.Find(id);
         //        //Product? productFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
