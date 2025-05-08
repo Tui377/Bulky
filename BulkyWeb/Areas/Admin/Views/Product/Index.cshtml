@@ -32,18 +32,20 @@
         </a>
     </div>
     </div>
-<table class="table table-bordered table-striped">
+<table id="tblData" class="table table-bordered table-striped">
     <thread>
-    <tr>
-            <th>Title</th>
-            <th>ISBN</th>
-            <th>Price</th>
-            <th>Author</th>
-            <th>Category</th>
-            <th></th>
-    </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
     </thread>
-    <tbody>
+
+    @* This whole section is deleted for the DataTable API *@
+@*     <tbody>
         @foreach (var obj in Model)
         {
             <tr>
@@ -51,6 +53,7 @@
                 <td>@obj.ISBN</td>
                 <td>@obj.ListPrice</td>
                 <td>@obj.Author</td>
+                <td>@obj.Category.Name</td>
                 <td>
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group me-2 w-26" role="group" aria-label="First group">
@@ -67,6 +70,12 @@
                 </td>
             </tr>
         }
-    </tbody>
+    </tbody> *@
+
 </table>
 </div>
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+
+}
