@@ -243,13 +243,14 @@ namespace BulkyWeb.Areas.Admin.Controllers
         //____API EndPoints Region  - more explanation on Week 7 Search Sort Ajax slides: 9____//
 
         #region API calls
+        [HttpGet]
         public IActionResult GetAll()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
-            return Json(new { data = objProductList });
+            return Json(new {data = objProductList});
         }
 
-        //Delete
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
