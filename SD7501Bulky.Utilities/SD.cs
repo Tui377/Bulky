@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace SD7501Bulky.Utilities
 {
+    //wk 8 - IdentityRoles
     public static class SD
     {
+        public const string Role_Customer = "Customer";
+        public const string Role_Company = "Company";
+        public const string Role_Admin = "Admin";
+        public const string Role_Employee = "Employee";
     }
 }

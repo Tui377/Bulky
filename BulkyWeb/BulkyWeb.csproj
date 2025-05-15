@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SD7501Bulky.DataAccess\SD7501Bulky.DataAccess.csproj" />
     <ProjectReference Include="..\SD7501Bulky.Models\SD7501Bulky.Models.csproj" />
+    <ProjectReference Include="..\SD7501Bulky.Utilities\SD7501Bulky.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
